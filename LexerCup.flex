@@ -7,6 +7,7 @@ import java_cup.runtime.Symbol;
 %full
 %line
 %char
+%unicode
 L=[a-zA-Z_]+
 D=[0-9]+
 espacio=[ ,\t,\r,\n]+
@@ -30,13 +31,46 @@ espacio=[ ,\t,\r,\n]+
 ( "\"" ) {return new Symbol(sym.Comillas, yychar, yyline, yytext());}
 
 /* Tipos de datos */
-( byte | char | long | float | double ) {return new Symbol(sym.T_dato, yychar, yyline, yytext());}
+( byte | short | int | long | float | double | bool | char | String) {return new Symbol(sym.Tipo_Dato, yychar, yyline, yytext());}
 
-/* Tipo de dato Int (Para el main) */
-( "int" ) {return new Symbol(sym.Int, yychar, yyline, yytext());}
+/* Palabra reservada Package */
+( package ) {return new Symbol(sym.Package, yychar, yyline, yytext());}
 
-/* Tipo de dato String */
-( String ) {return new Symbol(sym.Cadena, yychar, yyline, yytext());}
+/* Palabra reservada Import */
+( import ) {return new Symbol(sym.Import, yychar, yyline, yytext());}
+
+/* Palabra reservada Public */
+( public ) {return new Symbol(sym.Public, yychar, yyline, yytext());}
+
+/* Palabra reservada Private */
+( private ) {return new Symbol(sym.Private, yychar, yyline, yytext());}
+
+/* Palabra reservada Protected */
+( protected ) {return new Symbol(sym.Protected, yychar, yyline, yytext());}
+
+/* Palabra reservada Class */
+( class ) {return new Symbol(sym.Class, yychar, yyline, yytext());}
+
+/* Palabra reservada Extends */
+( extends ) {return new Symbol(sym.Extends, yychar, yyline, yytext());}
+
+/* Palabra reservada Static */
+( static ) {return new Symbol(sym.Static, yychar, yyline, yytext());}
+
+/* Palabra reservada Void */
+( void ) {return new Symbol(sym.Void, yychar, yyline, yytext());}
+
+/* Palabra reservada Try */
+( try ) {return new Symbol(sym.Try, yychar, yyline, yytext());}
+
+/* Palabra reservada Catch */
+( catch ) {return new Symbol(sym.Catch, yychar, yyline, yytext());}
+
+/* Palabra reservada Llamado al sistema */
+( System ) {return new Symbol(sym.sysCall, yychar, yyline, yytext());}
+
+/* Palabra reservada Exception */
+( Exception ) {return new Symbol(sym.Excepcion, yychar, yyline, yytext());}
 
 /* Palabra reservada If */
 ( if ) {return new Symbol(sym.If, yychar, yyline, yytext());}
@@ -52,6 +86,9 @@ espacio=[ ,\t,\r,\n]+
 
 /* Palabra reservada For */
 ( for ) {return new Symbol(sym.For, yychar, yyline, yytext());}
+
+/* This */
+ ( this ) {return new Symbol(sym.This, yychar, yyline, yytext());}
 
 /* Operador Igual */
 ( "=" ) {return new Symbol(sym.Igual, yychar, yyline, yytext());}
@@ -69,43 +106,46 @@ espacio=[ ,\t,\r,\n]+
 ( "/" ) {return new Symbol(sym.Division, yychar, yyline, yytext());}
 
 /* Operadores logicos */
-( "&&" | "||" | "!" | "&" | "|" ) {return new Symbol(sym.Op_logico, yychar, yyline, yytext());}
+( "&&" | "||" | "!" | "&" | "|" ) {return new Symbol(sym.Operador_Logico, yychar, yyline, yytext());}
 
 /*Operadores Relacionales */
-( ">" | "<" | "==" | "!=" | ">=" | "<=" | "<<" | ">>" ) {return new Symbol(sym.Op_relacional, yychar, yyline, yytext());}
+( ">" | "<" | "==" | "!=" | ">=" | "<=" | "<<" | ">>" ) {return new Symbol(sym.Operador_Relacional, yychar, yyline, yytext());}
 
 /* Operadores Atribucion */
-( "+=" | "-="  | "*=" | "/=" | "%=" | "=" ) {return new Symbol(sym.Op_atribucion, yychar, yyline, yytext());}
+( "+=" | "-="  | "*=" | "/=" | "%=" | "=" ) {return new Symbol(sym.Operador_Atribucion, yychar, yyline, yytext());}
 
 /* Operadores Incremento y decremento */
-( "++" | "--" ) {return new Symbol(sym.Op_incremento, yychar, yyline, yytext());}
+( "++" | "--" ) {return new Symbol(sym.Operador_InDec, yychar, yyline, yytext());}
 
 /*Operadores Booleanos*/
-( true | false ) {return new Symbol(sym.Op_booleano, yychar, yyline, yytext());}
+( true | false ) {return new Symbol(sym.Operador_Booleano, yychar, yyline, yytext());}
+
+/* Coma */
+ ( , ) {return new Symbol(sym.Coma, yychar, yyline, yytext());}
 
 /* Parentesis de apertura */
-( "(" ) {return new Symbol(sym.Parentesis_a, yychar, yyline, yytext());}
+( "(" ) {return new Symbol(sym.Parentesis_Abierto, yychar, yyline, yytext());}
 
 /* Parentesis de cierre */
-( ")" ) {return new Symbol(sym.Parentesis_c, yychar, yyline, yytext());}
+( ")" ) {return new Symbol(sym.Parentesis_Cerrado, yychar, yyline, yytext());}
 
 /* Llave de apertura */
-( "{" ) {return new Symbol(sym.Llave_a, yychar, yyline, yytext());}
+( "{" ) {return new Symbol(sym.Llave_Abierta, yychar, yyline, yytext());}
 
 /* Llave de cierre */
-( "}" ) {return new Symbol(sym.Llave_c, yychar, yyline, yytext());}
+( "}" ) {return new Symbol(sym.Llave_Cerrada, yychar, yyline, yytext());}
 
 /* Corchete de apertura */
-( "[" ) {return new Symbol(sym.Corchete_a, yychar, yyline, yytext());}
+( "[" ) {return new Symbol(sym.Corchete_Abierto, yychar, yyline, yytext());}
 
 /* Corchete de cierre */
-( "]" ) {return new Symbol(sym.Corchete_c, yychar, yyline, yytext());}
+( "]" ) {return new Symbol(sym.Corchete_Cerrado, yychar, yyline, yytext());}
 
 /* Marcador de inicio de algoritmo */
 ( "main" ) {return new Symbol(sym.Main, yychar, yyline, yytext());}
 
 /* Punto y coma */
-( ";" ) {return new Symbol(sym.P_coma, yychar, yyline, yytext());}
+( ";" ) {return new Symbol(sym.PuntoYcoma, yychar, yyline, yytext());}
 
 /* Identificador */
 {L}({L}|{D})* {return new Symbol(sym.Identificador, yychar, yyline, yytext());}
@@ -113,5 +153,6 @@ espacio=[ ,\t,\r,\n]+
 /* Numero */
 ("(-"{D}+")")|{D}+ {return new Symbol(sym.Numero, yychar, yyline, yytext());}
 
-/* Error de analisis */
- . {return new Symbol(sym.ERROR, yychar, yyline, yytext());}
+/* Punto */
+ (".") {return new Symbol(sym.Punto, yychar, yyline, yytext());}
+

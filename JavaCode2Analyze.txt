@@ -1,0 +1,23 @@
+package Utilidades;
+import java.io*;
+
+public class Rectangulo extends Cuadrado{
+
+int x,y;
+
+public static void main(String [] args){
+
+try{
+int base = 3
+int altura = 2;
+System.out.println("El àrea del Rectàngulo es "+(base*altura));
+}catch(Exception ex){
+System.out.println("Error");
+}
+}
+public Rectangulo(int x, int y){
+this.x=x;
+this.y=y;
+}
+}
+
